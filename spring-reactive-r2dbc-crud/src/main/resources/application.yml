@@ -1,0 +1,18 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: Spring-Reactive-R2DBC-CRUD
+  datasource:
+    username: root
+    password: root
+    url: jdbc:postgresql://localhost:5433/springreactivecrud
+    driver-class-name: org.postgresql.Driver
+  r2dbc:
+    username: root
+    password: root
+    url: r2dbc:postgresql://localhost:5433/springreactivecrud
+    pool:
+      max-size: 20
+    show-sql: true

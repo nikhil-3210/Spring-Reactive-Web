@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres-db
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: springreactivecrud
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - postgres-db
+      - spring-reactive-crud
+  spring-reactive-crud:
+    image: openjdk:17-jdk-slim
+    container_name: spring-reactive-crud
+    ports:
+      - 8081:8081
+    volumes:
+      - ./target/spring-reactive-r2dbc-crud-0.0.1-SNAPSHOT.jar:/app/spring-reactive-r2dbc-crud.jar
+    command: ["java","-jar","/app/spring-reactive-r2dbc-crud.jar"]
+    networks:
+      - spring-reactive-crud
+    depends_on:
+      - postgres
+
+networks:
+  postgres-db:
+  spring-reactive-crud:
+    driver: bridge
+
+volumes:
+  postgres_data
